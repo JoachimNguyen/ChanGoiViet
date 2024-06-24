@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Danh Sách Người Dùng</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <h1 class="mt-4 mb-4">Danh Sách Người Dùng</h1>
+    <br/>
+    <form th:action="@{/users}" method="get">
+        <button type="submit" class="btn btn-outline-dark">Làm Mới</button>
+    </form>
+    <table class="table table-bordered table-hover mt-4">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tên Đăng Nhập</th>
+            <th>Email</th>
+            <th>Số Điện Thoại</th>
+            <th>Role Người Dùng</th>
+            <th>Chỉnh Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.phone}"></td>
+            <td>
+                <ul>
+                    <li th:each="role : ${user.roles}" th:text="${role.name}"></li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="@{/users/{username}/edit(username=${user.username})}" class="btn btn-primary">Chỉnh sửa vai trò</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

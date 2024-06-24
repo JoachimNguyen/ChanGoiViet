@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .navbar-nav .nav-link {
+            color: #fff;
+            transition: color 0s, background-color 0s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #00FFFF;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+        }
+        .navbar-nav .nav-link.active {
+            color: #00FFFF;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 5px;
+        }
+        .footer {
+            background-color: #6c757d;
+            color: #fff;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1 0 auto;
+        }
+        .footer {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="/products">Chăn Gối Việt</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a th:href="@{/products}" sec:authorize="hasAnyAuthority('USER')" class="nav-link text-white">Sản Phẩm</a>
+                    <a th:href="@{/products}" sec:authorize="hasAnyAuthority('ADMIN')" class="nav-link text-white">Danh Sách Sản Phẩm</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" id="productTypeDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Loại Sản Phẩm</a>
+                    <ul class="dropdown-menu" aria-labelledby="productTypeDropdown">
+                        <li><a class="dropdown-item" th:href="@{/products/type/1}">Chăn</a></li>
+                        <li><a class="dropdown-item" th:href="@{/products/type/2}">Gối Ôm</a></li>
+                        <li><a class="dropdown-item" th:href="@{/products/type/4}">Gối Nằm</a></li>
+                        <!-- Thêm các loại sản phẩm khác ở đây -->
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" sec:authorize="hasAnyAuthority('ADMIN')" id="adminDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CHỨC NĂNG ADMIN</a>
+                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                        <li><a class="dropdown-item" th:href="@{/products/add}">Thêm Sản Phẩm</a></li>
+                        <li><a class="dropdown-item" th:href="@{/categories}">Quản Lý Loại</a></li>
+                        <li><a class="dropdown-item" th:href="@{/order}">Quản Lý Đơn Hàng</a></li>
+                        <li><a class="dropdown-item" th:href="@{/users}">Quản Lý Người Dùng</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item" style="margin-right: 10px;">
+                    <a class="nav-link text-white" href="cart">
+                        <span class="navbar-text text-white">Giỏ Hàng</span>
+                        <i class="fas fa-shopping-cart" style="font-size: 24px;"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
+                    <span class="navbar-text text-white">
+                        Xin chào, <span sec:authentication="name" style="margin-right: 20px;"></span>
+                    </span>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post">
+                        <button class="btn btn-outline-light" type="submit">Đăng Xuất</button>
+                    </form>
+                </li>
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
+                    <a class="btn btn-outline-light" href="/login">Đăng Nhập</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 content">
+    <section layout:fragment="content">
+        <!-- Nội dung cụ thể của từng trang sẽ được đặt tại đây -->
+    </section>
+</div>
+
+<footer class="footer bg-secondary text-white d-flex justify-content-center align-items-center">
+    <span>Copyright © ChanGoiViet - Nhóm ABC</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

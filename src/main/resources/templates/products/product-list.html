@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title th:text="${title} ?: 'Danh Sách Sản Phẩm'">Danh Sách Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5 content">
+    <section layout:fragment="content">
+        <form th:action="@{/products/search}" method="get" class="mb-3">
+            <div class="input-group">
+                <input type="text" id="search" name="query" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+        <div class="registration-message" th:if="!${#authorization.expression('isAuthenticated()')}">
+            <h4>Bạn hãy đăng ký tài khoản để có thể đặt hàng</h4>
+            <br/>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <div class="col" th:each="product : ${products}">
+                        <div class="card h-80">
+                            <img class="card-img-top" height="250" th:src="@{'/images/' + ${product.image}}" alt="Hình ảnh sản phẩm"/>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}">Tên sản phẩm</h5>
+                                <p class="card-text" th:text="${product.description}">Mô tả sản phẩm</p>
+                                <p class="card-text"><strong>Giá: </strong><span th:text="${#numbers.formatDecimal(product.price, 0, 0)}">Giá sản phẩm</span></p>
+                                <p class="card-text"><strong>Danh mục: </strong><span th:text="${product.category.name}">Tên danh mục</span></p>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div sec:authorize="hasAuthority('USER')">
+            <h1>Danh Sách Sản Phẩm</h1>
+            <br/>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
+                    <div class="col" th:each="product : ${products}">
+                        <div class="card h-80">
+                            <img class="card-img-top" height="250" th:src="@{'/images/' + ${product.image}}" alt="Hình ảnh sản phẩm"/>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}">Tên sản phẩm</h5>
+                                <p class="card-text" th:text="${product.description}">Mô tả sản phẩm</p>
+                                <p class="card-text"><strong>Giá: </strong><span th:text="${#numbers.formatDecimal(product.price, 0, 0)}">Giá sản phẩm</span></p>
+                                <p class="card-text"><strong>Loại sản phẩm: </strong><span th:text="${product.category.name}">Tên danh mục</span></p>
+                            </div>
+                            <div class="card-footer">
+                                <form th:action="@{/cart/add}" method="post">
+                                    <div class="input-group mt-3">
+                                        <input type="number" name="quantity" min="1" value="1" class="form-control" style="width: 70px;">
+                                        <input type="hidden" th:value="${product.id}" name="productId"/>
+                                        <button type="submit" class="btn btn-warning btn-sm">Thêm Vào Giỏ</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <h1>Danh Sách Sản Phẩm</h1>
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Ảnh</th>
+                    <th>Giá</th>
+                    <th>Mô Tả</th>
+                    <th>Loại Sản Phẩm</th>
+                    <th>Hành Động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td>
+                        <img height="120" width="150" th:src="@{'/images/' + ${product.image}}" alt="Hình ảnh sản phẩm"/>
+                    </td>
+                    <td><span th:text="${#numbers.formatDecimal(product.price, 0, 0)} + ' VNĐ'"></span></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.category.name}"></td>
+                    <td>
+                        <div>
+                            <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-success btn-sm">Sửa</a>
+                            <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc không?')">Xóa</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<footer class="footer">
+    <span>Copyright © ChanGoiViet - Nhóm ABC</span>
+</footer>
+
+<style th:inline="text">
+    .registration-message {
+        display: block; /* Hiển thị phần tử mặc định */
+    }
+    /* Ẩn phần tử khi người dùng đã đăng nhập */
+    .registration-message.hide-on-authenticated {
+        display: none;
+    }
+</style>
+
+<script th:inline="javascript">
+    $(function () {
+        $("#search").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/products/autocomplete",
+                    data: {
+                        query: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.name,
+                                value: item.name
+                            };
+                        }));
+                    }
+                });
+            },
+            minLength: 2
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

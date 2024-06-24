@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${title} ?: 'Thông Tin Đơn Hàng'">Thông Tin Đơn Hàng</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h2 class="card-title text-center mb-4">Nhập Thông Tin Đơn Hàng</h2>
+    <div class="card shadow p-3 mb-5 bg-body rounded">
+        <div class="row g-0">
+            <!-- Phần trái của card -->
+            <div class="col-md-6">
+                <div class="card-body">
+                    <form th:action="@{/order/submit}" method="post">
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Tên Của Bạn:</label>
+                        <input type="text" id="customerName" name="customerName" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="SDT" class="form-label">Số Điện Thoại:</label>
+                        <input type="text" id="SDT" name="SDT" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="diaChi" class="form-label">Địa Chỉ:</label>
+                        <input type="text" id="diaChi" name="diaChi" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <!-- Phần phải của card -->
+            <div class="col-md-6">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="text" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ghiChu" class="form-label">Ghi Chú:</label>
+                        <input type="text" id="ghiChu" name="ghiChu" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="thanhToan" class="form-label">Thanh Toán Bằng:</label>
+                        <select id="thanhToan" name="thanhToan" class="form-control" required>
+                            <option value="tiền mặt">Tiền mặt</option>
+                            <option value="Momo">Momo</option>
+                            <option value="chuyển khoản">Chuyển khoản</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Đặt Hàng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

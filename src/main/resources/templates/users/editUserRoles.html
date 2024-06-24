@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Chỉnh sửa vai trò người dùng</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <h1 class="mt-4 mb-4">Chỉnh sửa vai trò người dùng</h1>
+
+    <form method="post" th:action="@{/users/{username}/edit(username=${user.username})}">
+        <div class="mb-3">
+            <label>Tên đăng nhập</label>
+            <input type="text" class="form-control" th:value="${user.username}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="roles">Vai trò</label>
+            <select id="roles" name="roleIds" class="form-select">
+                <option value="" selected disabled>Chọn vai trò</option>
+                <option th:each="role : ${roles}"
+                        th:value="${role.id}"
+                        th:selected="${user.roles.contains(role)}"
+                        th:text="${role.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="return confirm('Bạn có chắc chắn muốn lưu thay đổi?')">Lưu</button>
+
+    </form>
+</div>
+</body>
+</html>

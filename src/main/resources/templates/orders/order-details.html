@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Chi Tiết Đơn Hàng</title>
+    <style>
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .card {
+            width: 100%;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: #007bff;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .list-group-item {
+            border: none;
+        }
+
+        .table {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-dark th {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="details-container">
+        <div class="card">
+            <h5 class="card-title">Thông tin đơn hàng</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Tên Khách Hàng:</strong> <span th:text="${order.customerName}"></span></li>
+                <li class="list-group-item"><strong>Địa Chỉ:</strong> <span th:text="${order.diaChi}"></span></li>
+                <li class="list-group-item"><strong>Số Điện Thoại:</strong> <span th:text="${order.SDT}"></span></li>
+                <li class="list-group-item"><strong>Phương Thức Thanh Toán:</strong> <span th:text="${order.thanhToan}"></span></li>
+                <li class="list-group-item"><strong>Ghi Chú:</strong> <span th:text="${order.ghiChu}"></span></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h5 class="card-title">Chi Tiết Sản Phẩm</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="detail : ${order.orderDetails}">
+                        <td th:text="${detail.product.name}"></td>
+                        <td th:text="${detail.quantity}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <form th:action="@{/order}" method="get">
+        <button type="submit" class="btn btn-outline-dark">Quay Lại</button>
+    </form>
+</div>
+</body>
+</html>
