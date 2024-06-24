@@ -58,13 +58,13 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/products")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
                         .permitAll()
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/products")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
                         .permitAll()
                 )
