@@ -14,18 +14,18 @@
             <div class="col-md-6">
                 <div class="card-body">
                     <form th:action="@{/order/submit}" method="post">
-                    <div class="mb-3">
-                        <label for="customerName" class="form-label">Tên Của Bạn:</label>
-                        <input type="text" id="customerName" name="customerName" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="SDT" class="form-label">Số Điện Thoại:</label>
-                        <input type="text" id="SDT" name="SDT" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="diaChi" class="form-label">Địa Chỉ:</label>
-                        <input type="text" id="diaChi" name="diaChi" class="form-control" required>
-                    </div>
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Tên Của Bạn:</label>
+                            <input type="text" id="customerName" name="customerName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="SDT" class="form-label">Số Điện Thoại:</label>
+                            <input type="text" id="SDT" name="SDT" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="diaChi" class="form-label">Địa Chỉ:</label>
+                            <input type="text" id="diaChi" name="diaChi" class="form-control" required>
+                        </div>
                 </div>
             </div>
             <!-- Phần phải của card -->
@@ -42,9 +42,7 @@
                     <div class="mb-3">
                         <label for="thanhToan" class="form-label">Thanh Toán Bằng:</label>
                         <select id="thanhToan" name="thanhToan" class="form-control" required>
-                            <option value="tiền mặt">Tiền mặt</option>
-                            <option value="Momo">Momo</option>
-                            <option value="chuyển khoản">Chuyển khoản</option>
+                            <option value="VNPAY">VN PAY</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Đặt Hàng</button>

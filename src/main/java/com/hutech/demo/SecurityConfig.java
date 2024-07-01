@@ -42,7 +42,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/", "/oauth/**", "/register", "/error", "/products", "/cart", "/cart/**").permitAll()
+                        .requestMatchers("/", "/home", "/register", "/error", "/products", "/products/type/**", "/products/search", "/cart", "/cart/**", "/public/**", "/oauth/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                         .requestMatchers("/products/edit/**", "/products/add", "/products/delete").hasAuthority("ADMIN")
                         .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()

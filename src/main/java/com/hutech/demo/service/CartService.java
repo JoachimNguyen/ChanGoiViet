@@ -19,6 +19,17 @@ public class CartService {
     @Autowired
     private ProductRepository productRepository;
 
+    public BigDecimal getTotalPrice() {
+        List<CartItem> cartItems = getCartItems();
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        for (CartItem item : cartItems) {
+            BigDecimal price = BigDecimal.valueOf(item.getProduct().getPrice());
+            BigDecimal itemTotal = price.multiply(BigDecimal.valueOf(item.getQuantity()));
+            totalPrice = totalPrice.add(itemTotal);
+        }
+        return totalPrice;
+    }
+
     public void addToCart(Long productId, int quantity) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));

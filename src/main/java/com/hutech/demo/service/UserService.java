@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
     public void setDefaultRole(String username) {
         userRepository.findByUsername(username).ifPresentOrElse(
                 user -> {
-                    user.getRoles().add(roleRepository.findRoleById(1L)); // Thay 1L bằng ID của vai trò mặc định
+                    user.getRoles().add(roleRepository.findRoleById(2L)); // Thay 1L bằng ID của vai trò mặc định
                     userRepository.save(user);
                 },
                 () -> { throw new UsernameNotFoundException("User not found"); }

@@ -1,5 +1,4 @@
 package com.hutech.demo.controller;
-
 import com.hutech.demo.model.Category;
 import com.hutech.demo.service.CategoryService;
 import jakarta.validation.Valid;
@@ -17,7 +16,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class CategoryController {
-
     @Autowired
     private final CategoryService categoryService;
 

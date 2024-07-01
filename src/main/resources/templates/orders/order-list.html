@@ -45,8 +45,10 @@
 <body>
 <div class="container" layout:fragment="content">
     <h1 class="mt-4 mb-4">Danh Sách Đơn Hàng</h1>
-
+    <a class="btn btn-primary" href="/order/export" target="_blank">Xuất File Excel Danh Sách Đơn Hàng</a>
+    <a class="btn btn-success" href="https://sandbox.vnpayment.vn/merchantv2/Transaction/PayMentExport.htm?total=1&export=1&fromdate=26-06-2024&todate=26-06-2024" target="_blank">Xuất File Excel Giao Dịch VNPAY</a>
     <form th:action="@{/order/search}" method="get" class="mb-4">
+        <br/>
         <div class="input-group">
             <input type="text" class="form-control" name="phoneNumber" placeholder="Nhập số điện thoại">
             <button class="btn btn-primary" type="submit">Tìm Kiếm</button>

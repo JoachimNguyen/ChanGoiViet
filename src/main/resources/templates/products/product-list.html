@@ -9,14 +9,17 @@
 <body>
 <div class="container mt-5 content">
     <section layout:fragment="content">
+        <h1 sec:authorize="hasAuthority('ADMIN')">Danh Sách Sản Phẩm</h1>
+        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" href="/products/export" target="_blank">Xuất File Excel Danh Sách Sản Phẩm</a>
         <form th:action="@{/products/search}" method="get" class="mb-3">
+            <br/>
             <div class="input-group">
                 <input type="text" id="search" name="query" class="form-control" placeholder="Tìm kiếm sản phẩm...">
                 <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
             </div>
         </form>
         <div class="registration-message" th:if="!${#authorization.expression('isAuthenticated()')}">
-            <h4>Bạn hãy đăng ký tài khoản để có thể đặt hàng</h4>
+            <h4>Bạn Hãy Đăng Nhập Để Có Thể Đặt Hàng</h4>
             <br/>
             <div class="container">
                 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -68,7 +71,6 @@
         </div>
 
         <div sec:authorize="hasAuthority('ADMIN')">
-            <h1>Danh Sách Sản Phẩm</h1>
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
                 <tr>
